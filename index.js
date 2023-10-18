@@ -6,8 +6,19 @@ const YAML = require('yaml')
 const fs = require('fs')
 const path = require('path')
 
-// with readFileSync the code is blocking with readFile need to have callback function
-const getRedirects = fs.readFileSync(path.join(__dirname, 'redirects.yml'), 'utf-8')
-console.log(getRedirects)
+// with readFileSync the code is blocking with readFile we need to have callback function
+const redirectsFile = fs.readFileSync(path.join(__dirname, 'redirects.yml'), 'utf-8')
+const redirects = YAML.parse(redirectsFile)
+console.log(redirects)
 
 // Generate HTML page from template
+const templateFile = fs.readFileSync(path.join(__dirname, "template.html"), 'utf-8')
+
+// Loop through enteries in the array
+console.log(Object.entries)
+for (let [slug, url] of Object.entries(redirects)) {
+    console.log('Generating HTML page for ', slug)
+
+    const html = templateFile.replaceAll('https://www.example.com', url)
+    console.log(html)
+}

@@ -21,4 +21,11 @@ for (let [slug, url] of Object.entries(redirects)) {
 
     const html = templateFile.replaceAll('https://www.example.com', url)
     console.log(html)
+
+    // Create folder for each slug
+    const folderPath = path.join(__dirname, 'dist', slug)
+    fs.mkdirSync(folderPath, { recursive: true })
+    // Create html file in folder
+    fs.writeFileSync(path.join(folderPath, 'index.html'), html)
+
 }
